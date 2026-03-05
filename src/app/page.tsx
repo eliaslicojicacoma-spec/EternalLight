@@ -1,4 +1,3 @@
-import { headers, cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import { internationalConfig } from "@/config/internationalConfig";
 
@@ -21,6 +20,5 @@ function pickLocaleFromRequest(): string {
 }
 
 export default function RootPage() {
-  const locale = pickLocaleFromRequest();
-  redirect(`/${locale}`);
+  redirect(`/${internationalConfig.defaultLocale}`);
 }
