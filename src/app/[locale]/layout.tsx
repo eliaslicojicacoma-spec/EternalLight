@@ -2,6 +2,7 @@ import "@/styles/globals.css";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import { internationalConfig } from "@/config/internationalConfig";
+import type { ReactNode } from "react";
 
 export const dynamicParams = false;
 
@@ -9,14 +10,15 @@ export function generateStaticParams() {
   return internationalConfig.locales.map((locale) => ({ locale }));
 }
 
-export default function LocaleLayout({
-  children,
-  params,
-}: {
-  children: React.ReactNode;
-  params: { locale: string };
-}) {
-  const locale = params.locale ?? internationalConfig.defaultLocale;
+type LayoutProps = {
+  children: ReactNode;
+  // Em alguns ambientes (Vercel/Next), params pode vir como Promise.
+  params: { locale: string } | Promise<{ locale: string }>;
+};
+
+export default async function LocaleLayout({ children, params }: LayoutProps) {
+  const resolvedParams = await params;
+  const locale = resolvedParams?.locale ?? internationalConfig.defaultLocale;
 
   return (
     <html lang={locale} suppressHydrationWarning>
