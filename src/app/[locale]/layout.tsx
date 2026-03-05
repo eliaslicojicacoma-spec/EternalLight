@@ -10,22 +10,24 @@ export function generateStaticParams() {
   return internationalConfig.locales.map((locale) => ({ locale }));
 }
 
-export default function LocaleLayout({
-  children,
-  params,
-}: {
+type Props = {
   children: ReactNode;
-  params: { locale: string };
-}) {
-  const locale = params?.locale ?? internationalConfig.defaultLocale;
+  params: Promise<{ locale: string }>;
+};
+
+export default async function LocaleLayout({ children, params }: Props) {
+  const { locale } = await params;
+  const safeLocale = internationalConfig.locales.includes(locale)
+    ? locale
+    : internationalConfig.defaultLocale;
 
   return (
-    <html lang={locale} suppressHydrationWarning>
+    <html lang={safeLocale} suppressHydrationWarning>
       <body className="min-h-screen">
-        <div className="hero-shell min-h-screen">
-          <Header locale={locale} />
+        <div className="bg-hero min-h-screen">
+          <Header locale={safeLocale} />
           <main className="pt-8">{children}</main>
-          <Footer locale={locale} />
+          <Footer locale={safeLocale} />
         </div>
       </body>
     </html>
