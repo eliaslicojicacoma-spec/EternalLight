@@ -2,10 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Base reset */
-* { box-sizing: border-box; }
-html, body { height: 100%; padding: 0; margin: 0; }
-
 :root {
   --bg: 255 255 255;
   --fg: 10 10 12;
@@ -24,6 +20,17 @@ html, body { height: 100%; padding: 0; margin: 0; }
   --ring: 200 200 220;
 }
 
+html,
+body {
+  padding: 0;
+  margin: 0;
+  height: 100%;
+}
+
+* {
+  box-sizing: border-box;
+}
+
 body {
   background: rgb(var(--bg));
   color: rgb(var(--fg));
@@ -35,7 +42,6 @@ body {
   background: rgba(120, 120, 160, 0.25);
 }
 
-/* Hero premium glow */
 .bg-hero {
   background:
     radial-gradient(900px 500px at 20% 10%, rgba(120, 120, 255, 0.18), transparent 60%),
@@ -50,27 +56,14 @@ body {
     radial-gradient(900px 520px at 50% 100%, rgba(255, 255, 255, 0.04), transparent 55%);
 }
 
-/* Helpers (sem @apply para evitar falhas no build) */
 .container-max {
-  width: 100%;
-  max-width: 72rem; /* ~ max-w-6xl */
-  margin-left: auto;
-  margin-right: auto;
-  padding-left: 1rem;
-  padding-right: 1rem;
-}
-
-@media (min-width: 640px) {
-  .container-max { padding-left: 1.5rem; padding-right: 1.5rem; }
+  @apply mx-auto w-full max-w-6xl px-4;
 }
 
 .card {
-  border-radius: 1rem; /* 2xl vibe */
-  border: 1px solid rgb(var(--border));
-  background: rgb(var(--card));
-  box-shadow: 0 10px 30px rgba(0,0,0,0.06);
+  @apply rounded-2xl border border-[rgb(var(--border))] bg-[rgb(var(--card))] shadow-[0_10px_30px_rgba(0,0,0,.06)];
 }
 
 .dark .card {
-  box-shadow: 0 10px 30px rgba(0,0,0,0.25);
+  @apply shadow-[0_10px_30px_rgba(0,0,0,.25)];
 }
