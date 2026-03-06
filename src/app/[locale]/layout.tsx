@@ -17,9 +17,11 @@ type Props = {
 
 export default async function LocaleLayout({ children, params }: Props) {
   const { locale } = await params;
-  const safeLocale = internationalConfig.locales.includes(locale)
-    ? locale
-    : internationalConfig.defaultLocale;
+
+  const safeLocale =
+    locale === "pt" || locale === "en"
+      ? locale
+      : internationalConfig.defaultLocale;
 
   return (
     <html lang={safeLocale} suppressHydrationWarning>
